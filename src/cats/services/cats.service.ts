@@ -34,4 +34,10 @@ export class CatsService {
     console.log(newCat);
     return newCat;
   }
+
+  async getAllCat() {
+    const allCat = await this.catsRepository.findAll();
+    const reaOnlyCats = allCat.map((cat) => cat.readOnlyData);
+    return reaOnlyCats;
+  }
 }
