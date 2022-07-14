@@ -1,19 +1,13 @@
-import {
-  Body,
-  Req,
-  UseFilters,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { Request } from 'express';
 import { AuthService } from 'src/auth/auth.service';
 import { LoginRequestDto } from 'src/auth/dto/login.request.dto';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
 import { CurrentUser } from 'src/common/decorators/user.decorator';
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor';
+import { Cat } from './cats.schema';
 import { CatsService } from './cats.service';
 import { ReadOnlyCatDto } from './dto/cat.dto';
 import { CatRequestDto } from './dto/cats.request.dto';
@@ -30,7 +24,7 @@ export class CatsController {
   @ApiOperation({ summary: '현재 고양이 가져오기' })
   @UseGuards(JwtAuthGuard)
   @Get()
-  getCurrentCat(@CurrentUser() cat) {
+  getCurrentCat(@CurrentUser() cat: Cat) {
     return cat.readOnlyData;
   }
 
@@ -55,11 +49,9 @@ export class CatsController {
     return this.authService.jwtLogin(data);
   }
 
-  @ApiOperation({ summary: '로그아웃' })
-  @Post('logout')
-  logOut() {
-    return 'logout';
-  }
+  //로그아웃은 없어도 괜찮음  이유 : 프론트에서 저장한 jwt 지워버리면 되기 떄문
+
+  @ApiOperation({ summary: '고양이 이미지 업로드' })
   @Post('upload/cats')
   uploadCatImg() {
     return 'uploadImg';
