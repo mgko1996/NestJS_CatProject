@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsModule } from './cats/cats.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
       useUnifiedTopology: true,
     }),
     CatsModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
